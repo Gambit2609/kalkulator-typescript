@@ -22,7 +22,7 @@ export function CreditSummary({ creditItems }: { creditItems: CreditItem[] }) {
     
     return (
         <div className="creditSummary">
-            <div className="creditSummaryItem">Łączne zobowiązanie:{`${creditSummary.totalCreditAmount}zł`}</div>
+            <div className="creditSummaryItem">Łączne zobowiązanie:{`${creditSummary.totalCreditAmount.toFixed(2)}zł`}</div>
             <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPayment.toFixed(2)}zł`}</div>
             <div className="creditSummaryItem">Uśrednione oprocentowanie kredytów:{creditSummary.averageRateOfIntereset.toFixed(2)}</div>
         </div>

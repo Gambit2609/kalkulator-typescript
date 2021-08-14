@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreditList from './CreditList';
 import { CreditSummary } from './CreditSummary';
 import { CreditItem } from '../DomainModel/Template';
@@ -10,29 +10,29 @@ const creditTemplate: CreditItem = {
     rateOfInterest: 0,
     wiborRate: 0.21,
     creditMonthlyPayment: 0,
-    additionalInterestRate: 0,
+    creditMonthlyPaymentAfterRateIncrease: 0,
     totalRateOfInterest: 0
 };
 
 export function CreditDataCollector() {
     const [creditLine, setCreditLine] = useState(creditTemplate);
     const [creditItems, setCreditItems] = useState<CreditItem[]>([]);
+    const [additionalInterestRate, setAdditionalInterestRate] = useState<number>(0);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, accessor: string): void {
         setCreditLine(prev => {
 
             let val: string | number;
-            val =  "valueAsNumber" in e.target ? e.target.valueAsNumber: e.target.value;
-            let newCreditLine: CreditItem = { ...prev, [accessor]: val || 0 };
-            const {rateOfInterest, additionalInterestRate, wiborRate} = newCreditLine;
+            val = "valueAsNumber" in e.target ? e.target.valueAsNumber || 0: e.target.value;
+            let newCreditLine: CreditItem = { ...prev, [accessor]: val };
+            const { rateOfInterest, wiborRate } = newCreditLine;
             newCreditLine.totalRateOfInterest = rateOfInterest + additionalInterestRate + wiborRate;
-            newCreditLine.creditMonthlyPayment = countCreditMonthlyPayment(newCreditLine);
+            newCreditLine.creditMonthlyPayment = countCreditMonthlyPayment(newCreditLine,additionalInterestRate, false);
+            newCreditLine.creditMonthlyPaymentAfterRateIncrease = countCreditMonthlyPayment(newCreditLine,additionalInterestRate, true);
 
             return newCreditLine;
         });
     }
-
-    console.log(creditLine)
 
     function generateID() {
         return Math.floor(Math.random() * 10000);
@@ -46,13 +46,34 @@ export function CreditDataCollector() {
         setCreditItems(prevState => prevState.filter(x => x !== creditData));
     }
 
-    function countCreditMonthlyPayment(credit: CreditItem): number {
-        let rateOfInterest = 1 + ((credit.rateOfInterest + credit.wiborRate + credit.additionalInterestRate) / 100) / 12;
+    function countCreditMonthlyPayment(credit: CreditItem, additionalRate:number, increasedRate: boolean): number {
+        let additionalInterest = increasedRate? additionalRate :0;
+        let rateOfInterest = 1 + ((credit.rateOfInterest + credit.wiborRate + additionalInterest) / 100) / 12;
         let creditDuration = credit.creditDuration;
         let creditMonthlyPayment = credit.creditAmount * Math.pow(rateOfInterest, creditDuration) * ((rateOfInterest - 1) / (Math.pow(rateOfInterest, creditDuration) - 1));
-    
+
         return creditMonthlyPayment;
     }
+
+    function handleAdditionalInterestRate(e:React.ChangeEvent<HTMLInputElement>):void {
+        setAdditionalInterestRate(e.target.valueAsNumber);
+    }
+
+    useEffect(()=>{
+        setCreditItems(prev=> {
+            let newCreditItems = prev.map(credit=> {
+                credit.totalRateOfInterest = credit.rateOfInterest + additionalInterestRate + credit.wiborRate;
+                credit.creditMonthlyPaymentAfterRateIncrease = countCreditMonthlyPayment(credit, additionalInterestRate, true);
+
+                return credit;
+            });
+            
+            return newCreditItems;
+        });
+
+        setCreditLine(prev=> ({...prev, totalRateOfInterest: prev.rateOfInterest + prev.wiborRate + additionalInterestRate}))
+
+    },[additionalInterestRate])
 
     return (
         <>
@@ -77,7 +98,7 @@ export function CreditDataCollector() {
                     <input type="number" onChange={(e) => handleChange(e, "rateOfInterest")} value={creditLine.rateOfInterest || ""} id="rateOfInterest" />
                 </label>
                 <label htmlFor="additionalInterestRate">Wysokość stopy procentowej
-                    <input type="number" onChange={(e) => handleChange(e, "additionalInterestRate")} value={creditLine.additionalInterestRate || ""} id="additionalInterestRate" />
+                    <input type="number" onChange={handleAdditionalInterestRate} value={additionalInterestRate || ""} id="additionalInterestRate" />
                 </label>
                 <div className="addCreditButton">
                     <button onClick={addCredit}>AddCredit</button>
@@ -85,7 +106,7 @@ export function CreditDataCollector() {
             </div>
 
             <CreditSummary creditItems={creditItems} />
-            <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} />
+            <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} additionalInterestRate={additionalInterestRate}/>
         </>
     );
 };

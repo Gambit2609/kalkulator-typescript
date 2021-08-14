@@ -5,9 +5,9 @@ export interface CreditItem {
     creditAmount: number;
     creditDuration: number;
     creditMonthlyPayment: number;
+    creditMonthlyPaymentAfterRateIncrease: number;
     rateOfInterest: number;
     wiborRate: number;
-    additionalInterestRate: number,
     totalRateOfInterest: number,
     id?: number;
 }
