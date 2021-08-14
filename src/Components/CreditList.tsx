@@ -10,7 +10,7 @@ interface CreditListProps {
 
 
 export default function CreditList({ creditItems, removeCreditLine,additionalInterestRate }: CreditListProps) {
-    console.log(creditItems)
+    
     return (
         <div className="creditList">
             {creditItems.map(credit =>

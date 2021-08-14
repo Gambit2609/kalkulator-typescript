@@ -74,9 +74,10 @@ export function CreditDataCollector() {
         setCreditLine(prev=> ({...prev, totalRateOfInterest: prev.rateOfInterest + prev.wiborRate + additionalInterestRate}))
 
     },[additionalInterestRate])
-
+    
     return (
         <>
+        <CreditSummary creditItems={creditItems} additionalInterestRate={additionalInterestRate}/>
             <div className="credit-info-container">
                 <label htmlFor="creditInfo">Rodzaj zobowiązania
                     <select id="creditInfo" value={creditLine.creditInfo} onChange={(e) => handleChange(e, "creditInfo")}>
@@ -105,7 +106,6 @@ export function CreditDataCollector() {
                 </div>
             </div>
 
-            <CreditSummary creditItems={creditItems} />
             <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} additionalInterestRate={additionalInterestRate}/>
         </>
     );
