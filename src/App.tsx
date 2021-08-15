@@ -2,12 +2,10 @@ import React from 'react';
 import './App.css';
 import { CreditDataCollector } from './Components/CreditDataCollector';
 
-function App() {
+export function App() {
   return (
     <div className="creditMainPage">
-      <CreditDataCollector /> 
-    </div>
+        <CreditDataCollector/>
+     </div>
   );
 }
-
-export default App;

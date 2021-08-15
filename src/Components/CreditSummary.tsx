@@ -1,6 +1,7 @@
 import React from 'react';
 import { CreditItem } from "../DomainModel/Template";
 
+
 interface CreditSummaryData {
     totalCreditAmount: number;
     totalCreditMonthlyPayment: number;
@@ -36,7 +37,7 @@ export function CreditSummary({ creditItems, additionalInterestRate }: { creditI
                 <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPayment.toFixed(2)}zł`}</div>
                 <div className="creditSummaryItem">Uśrednione oprocentowanie kredytów:{creditSummary.averageRateOfIntereset.toFixed(2)}</div>
             </div>
-            {additionalInterestRate  ?
+            {additionalInterestRate && creditSummary.totalCreditMonthlyPaymentAfterIncrease ?
                 <div className="creditSummary creditSummaryAfterRateIncrease">
                     <div className="creditSummaryItem">Łączne zobowiązanie:{`${creditSummary.totalCreditAmount.toFixed(2)}zł`}</div>
                     <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPaymentAfterIncrease.toFixed(2)}zł`}</div>

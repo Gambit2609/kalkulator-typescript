@@ -1,109 +1,125 @@
 .credit-data {
-    background-color: aquamarine;
-    display: flex;
-  }
-  
-  .credit-info-container {
-    margin-top: 50px;
-      width: 400px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 10px 0px;
-      box-shadow: 0px 0px 4px 0px;
-      box-sizing: border-box;
-      padding: 5px;
-  }
+  background-color: aquamarine;
+  display: flex;
+}
 
-  .credit-info-container label{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .addCreditButton {
-    grid-column: 1 / -1;
-    width: 100%;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .credit-info-container input {
-    margin: 5px 0px;
-    display: block;
-    border: none;
-    box-shadow: 0px 1px 2px 0px;
-    border-radius: 2px;
-    width: 190px;
-    outline: none;
-    padding: 5px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  
-  .credit-info-container select {
-    margin: 5px 0px;
-    display: block;
-    border: none;
-    box-shadow: 0px 1px 2px 0px;
-    border-radius: 2px;
-    width: 190px;
-    outline: none;
-    padding: 5px;
-    box-sizing: border-box;
-    font-size: 15px;
-  }
-  
-  .creditMainPage {
-    background-color: white;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .creditList {
+.credit-info-container {
+  margin-top: 50px;
     width: 400px;
     display: grid;
-    grid-gap: 5px;
-  }
-  
-  .creditData {
-    width: 400px;
-    margin: 5px 0px;
-    display: block;
-    border: none;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px 0px;
     box-shadow: 0px 0px 4px 0px;
-    border-radius: 2px;
-    outline: none;
-    padding: 5px;
     box-sizing: border-box;
-    font-size: 15px;
-  }
-  
-  .creditSummary {
-    width: 400px;
-    margin: 5px 0px;
-    display: grid;
-    border: none;
-    box-shadow: 0px 0px 4px 0px;
-    border-radius: 2px;
-    outline: none;
     padding: 5px;
-    box-sizing: border-box;
-    font-size: 18px;
-    justify-items: center;
-  }
-  
-  .creditSummaryItem {
-    border-bottom: 1px solid darkgray;
-    padding: 5px;
-  }
-  
-  .creditSummaryItem:last-child{
-    border: none;
-  }
+}
 
-  
+.credit-info-container label{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.addCreditButton {
+  grid-column: 1 / -1;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.credit-info-container input {
+  margin: 5px 0px;
+  display: block;
+  border: none;
+  box-shadow: 0px 1px 2px 0px;
+  border-radius: 2px;
+  width: 190px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.credit-info-container select {
+  margin: 5px 0px;
+  display: block;
+  border: none;
+  box-shadow: 0px 1px 2px 0px;
+  border-radius: 2px;
+  width: 190px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.creditMainPage {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+}
+
+.creditList {
+  width: 400px;
+  display: grid;
+  grid-gap: 5px;
+}
+
+.creditData {
+  width: 400px;
+  margin: 5px 0px;
+  display: block;
+  border: none;
+  box-shadow: 0px 0px 4px 0px;
+  border-radius: 2px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px; 
+}
+
+.creditSummary {
+  width: 400px;
+  margin: 5px 0px;
+  display: grid;
+  border: none;
+  box-shadow: 0px 0px 4px 0px;
+  border-radius: 2px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 18px;
+  justify-items: center;
+}
+
+.creditSummaryItem {
+  border-bottom: 1px solid darkgray;
+  padding: 5px;
+}
+
+.creditSummaryItem:last-child{
+  border: none;
+}
+
+.credit-enter {
+  opacity: 0;
+}
+
+.credit-enter-active {
+  opacity: 1;
+  transition: opacity 700ms
+}
+
+.credit-exit {
+  opacity: 1;
+}
+
+.credit-exit-active {
+  opacity: 0;
+  transition: opacity 700ms
+}

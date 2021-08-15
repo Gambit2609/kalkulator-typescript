@@ -32,6 +32,7 @@ export default function Credit({ creditData, removeCreditLine, additionalInteres
     return (
         <div className="creditData">
             <div className="creditDataLine">Rodzaj kredytu:{typeOfCreditToDisplay}</div>
+            
             <div className="creditDataLine">Kwota pozostała do spłaty:{`${creditData.creditAmount}zł`}</div>
             <div className="creditDataLine">Ilość miesięcy do zakończenia kredytu:{creditData.creditDuration}</div>
             <div className="creditDataLine rateOfInterest">
@@ -48,7 +49,7 @@ export default function Credit({ creditData, removeCreditLine, additionalInteres
                     null
                 }
             </div>
-            <button onClick={() => removeCreditLine(creditData)}>Remove credit</button>
+            <button onClick={() => removeCreditLine(creditData)}>Usuń kredyt</button>
         </div>
     );
 }

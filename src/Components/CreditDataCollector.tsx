@@ -102,7 +102,7 @@ export function CreditDataCollector() {
                     <input type="number" onChange={handleAdditionalInterestRate} value={additionalInterestRate || ""} id="additionalInterestRate" />
                 </label>
                 <div className="addCreditButton">
-                    <button onClick={addCredit}>AddCredit</button>
+                    <button onClick={addCredit}>Dodaj kredyt</button>
                 </div>
             </div>
 
