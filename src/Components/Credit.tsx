@@ -36,9 +36,9 @@ export default function Credit({ creditData, removeCreditLine, additionalInteres
             <div className="creditDataLine">Kwota pozostała do spłaty:{`${creditData.creditAmount}zł`}</div>
             <div className="creditDataLine">Ilość miesięcy do zakończenia kredytu:{creditData.creditDuration}</div>
             <div className="creditDataLine rateOfInterest">
-                <div>Marża kredytu:{`${(creditData.rateOfInterest + creditData.wiborRate).toFixed(2)}%`}</div>
+                <div>Oprocentowanie kredytu:{`${(creditData.rateOfInterest + creditData.wiborRate).toFixed(2)}%`}</div>
                 {additionalInterestRate ?
-                    <div>Marża z uwzględnieniem podwyżki stóp:{`${creditData.totalRateOfInterest.toFixed(2)}%`}</div> :
+                    <div>Oprocentowanie z uwzględnieniem podwyżki stóp:{`${creditData.totalRateOfInterest.toFixed(2)}%`}</div> :
                     null
                 }
             </div>

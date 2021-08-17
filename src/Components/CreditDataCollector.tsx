@@ -16,7 +16,7 @@ const creditTemplate: CreditItem = {
 
 export function CreditDataCollector() {
     const [creditLine, setCreditLine] = useState(creditTemplate);
-    const [creditItems, setCreditItems] = useState<CreditItem[]>([]);
+    const [creditItems, setCreditItems] = useState<CreditItem[]>(JSON.parse(localStorage.getItem("listOfCredits") || '[]'));
     const [additionalInterestRate, setAdditionalInterestRate] = useState<number>(0);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, accessor: string): void {
@@ -40,6 +40,7 @@ export function CreditDataCollector() {
 
     function addCredit() {
         setCreditItems([...creditItems, { ...creditLine, id: generateID() }]);
+        setCreditLine(prev=> ({...prev, creditInfo: "", creditAmount:0, creditDuration:0, rateOfInterest:0}));
     }
 
     function removeCreditLine(creditData: CreditItem) {
@@ -74,6 +75,10 @@ export function CreditDataCollector() {
         setCreditLine(prev=> ({...prev, totalRateOfInterest: prev.rateOfInterest + prev.wiborRate + additionalInterestRate}))
 
     },[additionalInterestRate])
+
+    useEffect(()=> {
+        localStorage.setItem("listOfCredits", JSON.stringify(creditItems))
+    },[creditItems])
     
     return (
         <>

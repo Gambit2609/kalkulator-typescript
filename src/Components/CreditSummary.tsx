@@ -7,10 +7,16 @@ interface CreditSummaryData {
     totalCreditMonthlyPayment: number;
     averageRateOfIntereset: number;
     totalCreditMonthlyPaymentAfterIncrease: number;
-    averageRateOfInteresetAfterIncrease:number
+    averageRateOfInteresetAfterIncrease: number;
+    differenceInMonthlyPayments: number;
+    totalCreditAmountWithInterest: number;
+    totalCreditAmountWithAdditionalInterest: number;
+    differenceInCreditAmountWithInterest: number;
+
+
 }
 
-export function CreditSummary({ creditItems, additionalInterestRate }: { creditItems: CreditItem[], additionalInterestRate:number }) {
+export function CreditSummary({ creditItems, additionalInterestRate }: { creditItems: CreditItem[], additionalInterestRate: number }) {
 
     let creditSummary = getCreditSummary(creditItems);
 
@@ -20,32 +26,46 @@ export function CreditSummary({ creditItems, additionalInterestRate }: { creditI
         let averageRateOfIntereset = creditItems.reduce((acc, val) => acc += (val.rateOfInterest + val.wiborRate) / creditItems.length, 0);
         let averageRateOfInteresetAfterIncrease = creditItems.reduce((acc, val) => acc += (val.rateOfInterest + val.wiborRate + additionalInterestRate) / creditItems.length, 0);
         let totalCreditMonthlyPaymentAfterIncrease = creditItems.reduce((acc, val) => acc += val.creditMonthlyPaymentAfterRateIncrease, 0);
+        let differenceInMonthlyPayments = totalCreditMonthlyPaymentAfterIncrease - totalCreditMonthlyPayment;
+        let totalCreditAmountWithInterest = creditItems.reduce((acc,val)=> acc += val.creditMonthlyPayment * val.creditDuration, 0);
+        let totalCreditAmountWithAdditionalInterest = creditItems.reduce((acc,val)=> acc += val.creditMonthlyPaymentAfterRateIncrease * val.creditDuration, 0);
+        let differenceInCreditAmountWithInterest = totalCreditAmountWithAdditionalInterest - totalCreditAmountWithInterest;
 
-        return { totalCreditAmount, 
-            totalCreditMonthlyPayment, 
-            totalCreditMonthlyPaymentAfterIncrease, 
-            averageRateOfIntereset, 
-            averageRateOfInteresetAfterIncrease 
+        return {
+            totalCreditAmount,
+            totalCreditMonthlyPayment,
+            totalCreditMonthlyPaymentAfterIncrease,
+            averageRateOfIntereset,
+            averageRateOfInteresetAfterIncrease,
+            differenceInMonthlyPayments,
+            totalCreditAmountWithInterest,
+            totalCreditAmountWithAdditionalInterest,
+            differenceInCreditAmountWithInterest
         };
     }
 
 
     return (
-        <>
+        <div className="creditSummaryContainer">
             <div className="creditSummary">
                 <div className="creditSummaryItem">Łączne zobowiązanie:{`${creditSummary.totalCreditAmount.toFixed(2)}zł`}</div>
                 <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPayment.toFixed(2)}zł`}</div>
-                <div className="creditSummaryItem">Uśrednione oprocentowanie kredytów:{creditSummary.averageRateOfIntereset.toFixed(2)}</div>
+                <div className="creditSummaryItem">Uśrednione oprocentowanie kredytów:{
+                    creditSummary.averageRateOfIntereset === 0.21 ? 0 : 
+                    `${(creditSummary.averageRateOfInteresetAfterIncrease || creditSummary.averageRateOfIntereset).toFixed(2)}%`}</div>
             </div>
-            {additionalInterestRate && creditSummary.totalCreditMonthlyPaymentAfterIncrease ?
-                <div className="creditSummary creditSummaryAfterRateIncrease">
-                    <div className="creditSummaryItem">Łączne zobowiązanie:{`${creditSummary.totalCreditAmount.toFixed(2)}zł`}</div>
-                    <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPaymentAfterIncrease.toFixed(2)}zł`}</div>
-                    <div className="creditSummaryItem">Uśrednione oprocentowanie kredytów:{creditSummary.averageRateOfInteresetAfterIncrease.toFixed(2)}</div>
-                </div> :
-                null
-            }
-        </>
+            <div className={additionalInterestRate && creditSummary.totalCreditMonthlyPayment?
+                 "creditSummary" : 
+                 "creditSummaryBeforeRateIncrase"}>
+                <div className={creditSummary.differenceInMonthlyPayments >= 0 ?
+                    "creditSummaryItem overpay" :
+                    "creditSummaryItem underpay"}>
+                    {`${creditSummary.differenceInMonthlyPayments.toFixed(2)}zł`}
+                </div>
+                <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPaymentAfterIncrease.toFixed(2)}zł`}</div>
+                <div className="creditSummaryItem">Dodatkowa kwota odsetek:{`${creditSummary.differenceInCreditAmountWithInterest.toFixed(2)}zł`}</div>
+            </div>
+        </div>
     );
 }
 
