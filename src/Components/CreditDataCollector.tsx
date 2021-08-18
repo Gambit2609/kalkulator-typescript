@@ -14,21 +14,28 @@ const creditTemplate: CreditItem = {
     totalRateOfInterest: 0
 };
 
+function getCreditItemsFromStorage(): CreditItem[] {
+    const creditItemsFromLocalStorage = localStorage.getItem("listOfCredits");
+    const initialState = creditItemsFromLocalStorage ? JSON.parse(creditItemsFromLocalStorage) : [];
+
+    return initialState;
+}
+
 export function CreditDataCollector() {
     const [creditLine, setCreditLine] = useState(creditTemplate);
-    const [creditItems, setCreditItems] = useState<CreditItem[]>(JSON.parse(localStorage.getItem("listOfCredits") || '[]'));
+    const [creditItems, setCreditItems] = useState<CreditItem[]>(getCreditItemsFromStorage);
     const [additionalInterestRate, setAdditionalInterestRate] = useState<number>(0);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, accessor: string): void {
         setCreditLine(prev => {
 
             let val: string | number;
-            val = "valueAsNumber" in e.target ? e.target.valueAsNumber || 0: e.target.value;
+            val = "valueAsNumber" in e.target ? e.target.valueAsNumber || 0 : e.target.value;
             let newCreditLine: CreditItem = { ...prev, [accessor]: val };
             const { rateOfInterest, wiborRate } = newCreditLine;
             newCreditLine.totalRateOfInterest = rateOfInterest + additionalInterestRate + wiborRate;
-            newCreditLine.creditMonthlyPayment = countCreditMonthlyPayment(newCreditLine,additionalInterestRate, false);
-            newCreditLine.creditMonthlyPaymentAfterRateIncrease = countCreditMonthlyPayment(newCreditLine,additionalInterestRate, true);
+            newCreditLine.creditMonthlyPayment = countCreditMonthlyPayment(newCreditLine, additionalInterestRate, false);
+            newCreditLine.creditMonthlyPaymentAfterRateIncrease = countCreditMonthlyPayment(newCreditLine, additionalInterestRate, true);
 
             return newCreditLine;
         });
@@ -38,17 +45,18 @@ export function CreditDataCollector() {
         return Math.floor(Math.random() * 10000);
     }
 
+    //TODO dodac nazwy handle do nazw funkcji
     function addCredit() {
         setCreditItems([...creditItems, { ...creditLine, id: generateID() }]);
-        setCreditLine(prev=> ({...prev, creditInfo: "", creditAmount:0, creditDuration:0, rateOfInterest:0}));
+        setCreditLine(prev => ({ ...prev, creditInfo: "", creditAmount: 0, creditDuration: 0, rateOfInterest: 0 }));
     }
 
     function removeCreditLine(creditData: CreditItem) {
         setCreditItems(prevState => prevState.filter(x => x !== creditData));
     }
 
-    function countCreditMonthlyPayment(credit: CreditItem, additionalRate:number, increasedRate: boolean): number {
-        let additionalInterest = increasedRate? additionalRate :0;
+    function countCreditMonthlyPayment(credit: CreditItem, additionalRate: number, increasedRate: boolean): number {
+        let additionalInterest = increasedRate ? additionalRate : 0;
         let rateOfInterest = 1 + ((credit.rateOfInterest + credit.wiborRate + additionalInterest) / 100) / 12;
         let creditDuration = credit.creditDuration;
         let creditMonthlyPayment = credit.creditAmount * Math.pow(rateOfInterest, creditDuration) * ((rateOfInterest - 1) / (Math.pow(rateOfInterest, creditDuration) - 1));
@@ -56,36 +64,40 @@ export function CreditDataCollector() {
         return creditMonthlyPayment;
     }
 
-    function handleAdditionalInterestRate(e:React.ChangeEvent<HTMLInputElement>):void {
+    function handleAdditionalInterestRate(e: React.ChangeEvent<HTMLInputElement>): void {
         setAdditionalInterestRate(e.target.valueAsNumber);
     }
 
-    useEffect(()=>{
-        setCreditItems(prev=> {
-            let newCreditItems = prev.map(credit=> {
-                credit.totalRateOfInterest = credit.rateOfInterest + additionalInterestRate + credit.wiborRate;
-                credit.creditMonthlyPaymentAfterRateIncrease = countCreditMonthlyPayment(credit, additionalInterestRate, true);
+    useEffect(() => {
 
-                return credit;
-            });
-            
-            return newCreditItems;
-        });
+        //TODO uproscic funkcje i przeniesc do osobnej funkcji
+        //TODO podmienic totalRaetOfInterest na getter
+        setCreditItems(prev =>
+            prev.map(credit => (
+                {
+                    ...credit,
+                    totalRateOfInterest: credit.rateOfInterest + additionalInterestRate + credit.wiborRate,
+                    creditMonthlyPaymentAfterRateIncrease: countCreditMonthlyPayment(credit, additionalInterestRate, true),
+                }))
+        );
 
-        setCreditLine(prev=> ({...prev, totalRateOfInterest: prev.rateOfInterest + prev.wiborRate + additionalInterestRate}))
 
-    },[additionalInterestRate])
+        setCreditLine(prev => ({ ...prev, totalRateOfInterest: prev.rateOfInterest + prev.wiborRate + additionalInterestRate }))
 
-    useEffect(()=> {
+    }, [additionalInterestRate])
+
+    useEffect(() => {
         localStorage.setItem("listOfCredits", JSON.stringify(creditItems))
-    },[creditItems])
-    
+    }, [creditItems])
+
     return (
         <>
-        <CreditSummary creditItems={creditItems} additionalInterestRate={additionalInterestRate}/>
+            <CreditSummary creditItems={creditItems} additionalInterestRate={additionalInterestRate} />
+            {/* TODO stworzyc komponent z calego htm ponizej */}
             <div className="credit-info-container">
                 <label htmlFor="creditInfo">Rodzaj zobowiązania
                     <select id="creditInfo" value={creditLine.creditInfo} onChange={(e) => handleChange(e, "creditInfo")}>
+                        {/* TODO nauczyc sie <datalist>, wygenerowac opcje na podsatwie listy anie z reki */}
                         <option value="">----</option>
                         <option value="consumer-loan">Kredyt konsumpcyjny</option>
                         <option value="mortgage">Kredyt hipoteczny</option>
@@ -94,6 +106,7 @@ export function CreditDataCollector() {
                         <option value="credit-card">Karta kredytowa</option>
                     </select>
                 </label>
+                {/* TODO wygenerowac liste z configa */}
                 <label htmlFor="creditAmount">Kwota kapitału pozostała do spłaty
                     <input id="creditAmount" onChange={(e) => (handleChange(e, "creditAmount"))} value={creditLine.creditAmount || ""} type="number" />
                 </label>
@@ -111,7 +124,7 @@ export function CreditDataCollector() {
                 </div>
             </div>
 
-            <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} additionalInterestRate={additionalInterestRate}/>
+            <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} additionalInterestRate={additionalInterestRate} />
         </>
     );
 };
