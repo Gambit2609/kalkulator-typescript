@@ -69,9 +69,6 @@ export function CreditDataCollector() {
     }
 
     useEffect(() => {
-
-        //TODO uproscic funkcje i przeniesc do osobnej funkcji
-        //TODO podmienic totalRaetOfInterest na getter
         setCreditItems(prev =>
             prev.map(credit => (
                 {
@@ -93,11 +90,11 @@ export function CreditDataCollector() {
     return (
         <>
             <CreditSummary creditItems={creditItems} additionalInterestRate={additionalInterestRate} />
-            {/* TODO stworzyc komponent z calego htm ponizej */}
+            
             <div className="credit-info-container">
+            <div className="optionalOrRequired">Dane wymagane</div>
                 <label htmlFor="creditInfo">Rodzaj zobowiązania
                     <select id="creditInfo" value={creditLine.creditInfo} onChange={(e) => handleChange(e, "creditInfo")}>
-                        {/* TODO nauczyc sie <datalist>, wygenerowac opcje na podsatwie listy anie z reki */}
                         <option value="">----</option>
                         <option value="consumer-loan">Kredyt konsumpcyjny</option>
                         <option value="mortgage">Kredyt hipoteczny</option>
@@ -106,7 +103,6 @@ export function CreditDataCollector() {
                         <option value="credit-card">Karta kredytowa</option>
                     </select>
                 </label>
-                {/* TODO wygenerowac liste z configa */}
                 <label htmlFor="creditAmount">Kwota kapitału pozostała do spłaty
                     <input id="creditAmount" onChange={(e) => (handleChange(e, "creditAmount"))} value={creditLine.creditAmount || ""} type="number" />
                 </label>
@@ -116,6 +112,7 @@ export function CreditDataCollector() {
                 <label htmlFor="rateOfInterest">Marża banku z umowy kredytowej
                     <input type="number" onChange={(e) => handleChange(e, "rateOfInterest")} value={creditLine.rateOfInterest || ""} id="rateOfInterest" />
                 </label>
+                <div className="optionalOrRequired">Dane opcjonalne:</div>
                 <label htmlFor="additionalInterestRate">Wysokość stopy procentowej
                     <input type="number" onChange={handleAdditionalInterestRate} value={additionalInterestRate || ""} id="additionalInterestRate" />
                 </label>
@@ -123,7 +120,6 @@ export function CreditDataCollector() {
                     <button onClick={addCredit}>Dodaj kredyt</button>
                 </div>
             </div>
-
             <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} additionalInterestRate={additionalInterestRate} />
         </>
     );

@@ -62,7 +62,7 @@ export function CreditSummary({ creditItems, additionalInterestRate }: { creditI
                     "creditSummaryItem underpay"}>
                     {`${creditSummary.differenceInMonthlyPayments.toFixed(2)}zł`}
                 </div>
-                <div className="creditSummaryItem">Suma rat kredytowych:{`${creditSummary.totalCreditMonthlyPaymentAfterIncrease.toFixed(2)}zł`}</div>
+                <div className="creditSummaryItem">Suma rat kredytowych:<span>{`${creditSummary.totalCreditMonthlyPaymentAfterIncrease.toFixed(2)}zł`}</span></div>
                 <div className="creditSummaryItem">Dodatkowa kwota odsetek:{`${creditSummary.differenceInCreditAmountWithInterest.toFixed(2)}zł`}</div>
             </div>
         </div>

@@ -1,23 +1,35 @@
+.creditMainPage {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 500;
+}
+
 .credit-data {
   background-color: aquamarine;
   display: flex;
 }
 
 .credit-info-container {
-  margin-top: 50px;
-    width: 400px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px 0px;
-    box-shadow: 0px 0px 4px 0px;
-    box-sizing: border-box;
-    padding: 5px;
+  margin-top: 30px;
+  width: 440px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px 10px;
+  box-sizing: border-box;
+  padding: 6px;
 }
 
-.credit-info-container label{
+.credit-info-container label {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .addCreditButton {
@@ -54,33 +66,68 @@
   font-size: 15px;
 }
 
-.creditMainPage {
-  background-color: white;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: center;
-}
-
 .creditList {
-  width: 400px;
   display: grid;
   grid-gap: 5px;
 }
 
 .creditData {
-  width: 400px;
+  position: relative;
+  min-width: 500px;
+  max-width: 800px;
+  height: 110px;
   margin: 5px 0px;
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   border: none;
   box-shadow: 0px 0px 4px 0px;
   border-radius: 2px;
   outline: none;
   padding: 5px;
   box-sizing: border-box;
-  font-size: 15px; 
+  font-size: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.deleteCreditLine{
+  position: absolute;
+  right: -40px;
+  top: 40px;
+}
+
+.creditDataLine {
+  position: relative;
+  border-right: 1px solid black;
+  margin: 3px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.creditDataLine div:last-child {
+  padding: 3px;
+  position: absolute;
+  bottom: 0px;
+  font-size: 18px;
+}
+
+.creditDataLineExtended {
+  position: relative;
+  min-width: 600px;
+  max-width: 1000px;
+  height: 110px;
+  margin: 5px 0px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: none;
+  box-shadow: 0px 0px 4px 0px;
+  border-radius: 2px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .creditSummary {
@@ -92,21 +139,23 @@
   box-shadow: 0px 0px 4px 0px;
   border-radius: 2px;
   outline: none;
-  padding: 5px;
   box-sizing: border-box;
   font-size: 18px;
   justify-items: center;
   transition: 700ms;
-
 }
 
 .creditSummaryItem {
   border-bottom: 1px solid darkgray;
-  padding: 5px;
+  padding: 8px;
 }
 
-.creditSummaryItem:last-child{
+.creditSummaryItem:last-child {
   border: none;
+}
+
+.creditSummaryItem #text{
+  color: yellow;
 }
 
 .credit-enter {
@@ -127,7 +176,7 @@
   transition: opacity 700ms
 }
 
-.creditSummaryBeforeRateIncrase{
+.creditSummaryBeforeRateIncrase {
   width: 0px;
   height: 0px;
   opacity: 0;
@@ -136,25 +185,53 @@
   font-size: 1px;
 }
 
-.creditSummaryContainer{
+.creditSummaryContainer {
   display: flex;
   width: 900px;
   justify-content: center;
 }
 
-.overpay{
+.overpay {
   color: red;
-  border:none;
+  border: none;
 }
 
-.overpay::before{
-content: "Miesięczne zobowiązanie wzrośnie o ";
+.overpay::before {
+  content: "Miesięczne zobowiązanie wzrośnie o ";
 }
 
-.underpay{
+.underpay {
   color: green
 }
 
-.underpay::before{
+.underpay::before {
   content: "Miesięczne zobowiązanie zmaleje o ";
+}
+
+.optionalOrRequired {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  padding: 5px;
+}
+
+.creditType {
+  padding: 3px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.last {
+  border-right: none;
+}
+
+.creditDataLineInterestIncreased {
+  color: red;
+}
+
+.creditMonthlyPaymentAfterRateDecrease{
+  color:green;
+}
+
+.creditDataLineInterestUnchanged {
+  color: steelblue;
 }
