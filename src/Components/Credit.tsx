@@ -7,7 +7,7 @@ interface CreditProps {
 }
 
 export default function Credit({ creditData, removeCreditLine, additionalInterestRate }: CreditProps) {
-
+    
     const typeOfCredit = creditData.creditInfo;
     let typeOfCreditToDisplay;
     switch (typeOfCredit) {

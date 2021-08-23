@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreditList from './CreditList';
 import { CreditSummary } from './CreditSummary';
-import { CreditItem } from '../DomainModel/Template';
+import { CreditItem, Validation } from '../DomainModel/Template';
 
 const creditTemplate: CreditItem = {
     creditInfo: "",
@@ -45,14 +45,47 @@ export function CreditDataCollector() {
         return Math.floor(Math.random() * 10000);
     }
 
-    //TODO dodac nazwy handle do nazw funkcji
-    function addCredit() {
+    function handleAddCredit() {
+        let validationPassed = validateCreditInformation(creditLine);
+        if(validationPassed) {
+            clearValidationInput();
+        }else{
+            return;
+        }
         setCreditItems([...creditItems, { ...creditLine, id: generateID() }]);
         setCreditLine(prev => ({ ...prev, creditInfo: "", creditAmount: 0, creditDuration: 0, rateOfInterest: 0 }));
     }
 
-    function removeCreditLine(creditData: CreditItem) {
+    function handleRemoveCreditLine(creditData: CreditItem) {
         setCreditItems(prevState => prevState.filter(x => x !== creditData));
+    }
+
+    function validateCreditInformation(userCreditData:CreditItem):boolean {
+        let validationSuccessfull = {success: true};
+        userCreditData.creditAmount <= 0 && validationNegative("creditAmount", validationSuccessfull);
+        userCreditData.creditAmount > 0 && validationPositive("creditAmount");
+        userCreditData.creditDuration <= 0 && validationNegative("creditDuration", validationSuccessfull);
+        userCreditData.creditDuration > 0 && validationPositive("creditDuration");
+        userCreditData.rateOfInterest <= 0 && validationNegative("rateOfInterest", validationSuccessfull);
+        userCreditData.rateOfInterest > 0 && validationPositive("rateOfInterest");
+        userCreditData.creditInfo === "" && validationNegative("creditInfo", validationSuccessfull);
+        userCreditData.creditInfo !== "" && validationPositive("creditInfo");
+        
+        return validationSuccessfull.success;
+    }
+
+    function validationPositive(inputName:string ):void{
+        document.getElementById(inputName)!.style.boxShadow = "0px 1px 3px 0px green";
+    }
+
+    function validationNegative(inputName:string, validationResult:Validation):void{
+        document.getElementById(inputName)!.style.boxShadow = "0px 1px 3px 0px red";
+        validationResult.success = false;
+    }
+
+    function clearValidationInput():void {
+        let inputs = ["creditAmount", "creditDuration", "rateOfInterest", "creditInfo"];
+        inputs.forEach(x=> document.getElementById(x)!.style.boxShadow = "0px 1px 2px 0px");
     }
 
     function countCreditMonthlyPayment(credit: CreditItem, additionalRate: number, increasedRate: boolean): number {
@@ -117,10 +150,10 @@ export function CreditDataCollector() {
                     <input type="number" onChange={handleAdditionalInterestRate} value={additionalInterestRate || ""} id="additionalInterestRate" />
                 </label>
                 <div className="addCreditButton">
-                    <button onClick={addCredit}>Dodaj kredyt</button>
+                    <button onClick={handleAddCredit}>Dodaj kredyt</button>
                 </div>
             </div>
-            <CreditList creditItems={creditItems} removeCreditLine={removeCreditLine} additionalInterestRate={additionalInterestRate} />
+            <CreditList creditItems={creditItems} removeCreditLine={handleRemoveCreditLine} additionalInterestRate={additionalInterestRate} />
         </>
     );
 };

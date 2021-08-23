@@ -1,5 +1,3 @@
-import { TypeOfTag } from "typescript";
-
 export interface CreditItem {
     creditInfo: string;
     creditAmount: number;
@@ -10,4 +8,8 @@ export interface CreditItem {
     wiborRate: number;
     totalRateOfInterest: number,
     id?: number;
+}
+
+export interface Validation {
+    success: boolean;
 }
