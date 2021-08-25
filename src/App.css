@@ -1,3 +1,36 @@
+html{
+  overflow-x: hidden;
+}
+
+.welcomeHeader {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headerTitle {
+  font-size: 25px;
+  padding: 20px;
+}
+
+#splitter {
+  width: 300px;
+  height: 10px;
+  background-color: #599bb3;
+  border-radius: 10px;
+  border: none;
+  opacity: 0.9;
+}
+
+.headerDescription{
+  padding: 20px;
+  white-space:pre-wrap;
+  text-align: center;
+  line-height: 1.7em;
+}
+
 .creditMainPage {
   background-color: white;
   width: 100vw;
@@ -17,7 +50,7 @@
 
 .credit-info-container {
   margin-top: 30px;
-  width: 440px;
+  width: 470px;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 10px 10px;
@@ -30,14 +63,16 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
-.addCreditButton {
+.addCredit {
   grid-column: 1 / -1;
   width: 100%;
   align-items: center;
   display: flex;
   justify-content: center;
+  margin: 15px 0px 15px;
 }
 
 .credit-info-container input {
@@ -69,6 +104,7 @@
 .creditList {
   display: grid;
   grid-gap: 5px;
+  padding-bottom: 10px;
 }
 
 .creditData {
@@ -76,7 +112,7 @@
   min-width: 500px;
   max-width: 800px;
   height: 110px;
-  margin: 5px 0px;
+  margin: 10px 0px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   border: none;
@@ -90,10 +126,15 @@
   font-weight: 600;
 }
 
-.deleteCreditLine{
+.deleteCreditLine {
   position: absolute;
   right: -40px;
   top: 40px;
+  transform: translateZ(0px);
+}
+
+#deleteCreditLine{
+  transform: translateZ(0px);
 }
 
 .creditDataLine {
@@ -108,13 +149,13 @@
   padding: 3px;
   position: absolute;
   bottom: 0px;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .creditDataLineExtended {
   position: relative;
   min-width: 600px;
-  max-width: 1000px;
+  max-width: 1100px;
   height: 110px;
   margin: 5px 0px;
   display: grid;
@@ -143,6 +184,7 @@
   font-size: 18px;
   justify-items: center;
   transition: 700ms;
+  border-radius: 10px;
 }
 
 .creditSummaryItem {
@@ -154,7 +196,7 @@
   border: none;
 }
 
-.creditSummaryItem #text{
+.creditSummaryItem #text {
   color: yellow;
 }
 
@@ -228,14 +270,67 @@
   color: red;
 }
 
-.creditMonthlyPaymentAfterRateDecrease{
-  color:green;
+.creditMonthlyPaymentAfterRateDecrease {
+  color: green;
 }
 
 .creditDataLineInterestUnchanged {
   color: steelblue;
 }
 
-.invalidValidation{
-box-shadow: 0px 1px 2px 0px red;
+.invalidInputData {
+  opacity: 0;
+  position: absolute;
+  right: -15px;
+  font-size: 25px;
+  font-weight: 600;
+  color: red;
+}
+
+.userInfoDescription{
+  position: absolute;
+    right: -250px;
+    bottom: -50px;
+    width: 150px;
+    background: white;
+    z-index: 10;
+    border: 1px solid gray;
+    padding: 1em;
+    display: none;
+}
+
+.userInfoIcon{
+  position: absolute;
+  right: -50px;
+}
+
+.userInfoIcon input{
+  width: 30px;
+  height: 30px;
+  transform: translateZ(0px);
+}
+
+.userInfoIcon:hover + .userInfoDescription{
+  display: initial;
+}
+
+#buttonAddCredit {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background-color:#599bb3;
+	border-radius:4px;
+	border:1px solid #29668f;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size:14px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+  width: 150px;
+}
+#buttonAddCredit:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
 }

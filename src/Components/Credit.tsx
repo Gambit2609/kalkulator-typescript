@@ -45,7 +45,7 @@ export default function Credit({ creditData, removeCreditLine, additionalInteres
             </div>
             <div className="creditDataLine rateOfInterest">
                 <div className="creditType">Oprocentowanie kredytu:</div>
-                <div className="creditDataLineInterestUnchanged">{`${(creditData.rateOfInterest + creditData.wiborRate).toFixed(2)}%`}</div>
+                <div className="creditDataLineInterestUnchanged">{`${creditData.rateOfInterest.toFixed(2)}%`}</div>
             </div>
             <div className={additionalInterestRate ? "creditDataLine" : "creditDataLine last"}>
                 <div className="creditType">Miesięczna rata kredytu:</div>

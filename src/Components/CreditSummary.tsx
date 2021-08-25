@@ -23,8 +23,8 @@ export function CreditSummary({ creditItems, additionalInterestRate }: { creditI
     function getCreditSummary(creditItems: CreditItem[]): CreditSummaryData {
         let totalCreditAmount = creditItems.reduce((acc, val) => acc += val.creditAmount, 0);
         let totalCreditMonthlyPayment = creditItems.reduce((acc, val) => acc += val.creditMonthlyPayment, 0);
-        let averageRateOfIntereset = creditItems.reduce((acc, val) => acc += (val.rateOfInterest + val.wiborRate) / creditItems.length, 0);
-        let averageRateOfInteresetAfterIncrease = creditItems.reduce((acc, val) => acc += (val.rateOfInterest + val.wiborRate + additionalInterestRate) / creditItems.length, 0);
+        let averageRateOfIntereset = creditItems.reduce((acc, val) => acc += val.rateOfInterest / creditItems.length, 0);
+        let averageRateOfInteresetAfterIncrease = creditItems.reduce((acc, val) => acc += (val.rateOfInterest + additionalInterestRate) / creditItems.length, 0);
         let totalCreditMonthlyPaymentAfterIncrease = creditItems.reduce((acc, val) => acc += val.creditMonthlyPaymentAfterRateIncrease, 0);
         let differenceInMonthlyPayments = totalCreditMonthlyPaymentAfterIncrease - totalCreditMonthlyPayment;
         let totalCreditAmountWithInterest = creditItems.reduce((acc,val)=> acc += val.creditMonthlyPayment * val.creditDuration, 0);
