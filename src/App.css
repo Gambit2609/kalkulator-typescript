@@ -1,38 +1,350 @@
-.App {
-  text-align: center;
+html {
+  overflow-x: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.welcomeHeader {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 900;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.headerTitle {
+  font-size: 25px;
+  padding: 20px;
+}
+
+#splitter {
+  width: 300px;
+  height: 10px;
+  background-color: #599bb3;
+  border-radius: 10px;
+  border: none;
+  opacity: 0.9;
+}
+
+.headerDescription {
+  padding: 20px;
+  white-space: pre-wrap;
+  text-align: center;
+  line-height: 1.7em;
+}
+
+.creditMainPage {
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 500;
+}
+
+.credit-data {
+  background-color: aquamarine;
+  display: flex;
+}
+
+.credit-info-container {
+  margin-top: 30px;
+  width: 470px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px 10px;
+  box-sizing: border-box;
+  padding: 6px;
+}
+
+.credit-info-container label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.addCredit {
+  grid-column: 1 / -1;
+  width: 100%;
+  align-items: center;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin: 15px 0px 15px;
+}
+
+.credit-info-container input {
+  margin: 5px 0px;
+  display: block;
+  border: none;
+  box-shadow: 0px 1px 2px 0px;
+  border-radius: 2px;
+  width: 190px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.credit-info-container select {
+  margin: 5px 0px;
+  display: block;
+  border: none;
+  box-shadow: 0px 1px 2px 0px;
+  border-radius: 2px;
+  width: 190px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.creditList {
+  display: grid;
+  grid-gap: 5px;
+  padding-bottom: 10px;
+}
+
+.creditData {
+  position: relative;
+  min-width: 500px;
+  max-width: 800px;
+  height: 110px;
+  margin: 10px 0px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: none;
+  box-shadow: 0px 0px 4px 0px;
+  border-radius: 2px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.deleteCreditLine {
+  position: absolute;
+  right: -40px;
+  top: 40px;
+  transform: translateZ(0px);
+}
+
+#deleteCreditLine {
+  transform: translateZ(0px);
+}
+
+.creditDataLine {
+  position: relative;
+  border-right: 1px solid black;
+  margin: 3px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.creditDataLine div:last-child {
+  padding: 3px;
+  position: absolute;
+  bottom: 0px;
+  font-size: 17px;
+}
+
+.creditDataLineExtended {
+  position: relative;
+  min-width: 600px;
+  max-width: 1100px;
+  height: 110px;
+  margin: 5px 0px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: none;
+  box-shadow: 0px 0px 4px 0px;
+  border-radius: 2px;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.creditSummary {
+  height: 120px;
+  width: 400px;
+  margin: 5px 5px;
+  display: grid;
+  border: none;
+  box-shadow: 0px 0px 4px 0px;
+  border-radius: 2px;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 18px;
+  justify-items: center;
+  transition: 700ms;
+  border-radius: 10px;
+}
+
+.creditSummaryItem {
+  border-bottom: 1px solid darkgray;
+  padding: 8px;
+}
+
+.creditSummaryItem:last-child {
+  border: none;
+}
+
+.creditSummaryItem #text {
+  color: yellow;
+}
+
+.credit-enter {
+  opacity: 0;
+}
+
+.credit-enter-active {
+  opacity: 1;
+  transition: opacity 700ms
+}
+
+.credit-exit {
+  opacity: 1;
+}
+
+.credit-exit-active {
+  opacity: 0;
+  transition: opacity 700ms
+}
+
+.creditSummaryBeforeRateIncrase {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  transition: 700ms;
   color: white;
+  font-size: 1px;
 }
 
-.App-link {
-  color: #61dafb;
+.creditSummaryContainer {
+  display: flex;
+  width: 900px;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.overpay {
+  color: red;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  padding-top: 8px;
+  padding-bottom: 0px;
+  align-items: center;
+}
+
+.overpay::before {
+  content: "Miesięczne zobowiązanie wzrośnie o:";
+  font-size: 16px;
+}
+
+.underpay {
+  color: green;
+  display: flex;
+  flex-direction: row;
+  padding-top: 8px;
+  padding-bottom: 0px;
+  align-items: center;
+}
+
+.underpay::before {
+  content: "Miesięczne zobowiązanie zmaleje o:";
+  font-size: 16px;
+}
+
+.optionalOrRequired {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  padding: 5px;
+}
+
+.creditType {
+  padding: 3px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.last {
+  border-right: none;
+}
+
+.creditDataLineInterestIncreased {
+  color: red;
+}
+
+.creditMonthlyPaymentAfterRateDecrease {
+  color: green;
+}
+
+.creditDataLineInterestUnchanged {
+  color: steelblue;
+}
+
+.invalidInputData {
+  opacity: 0;
+  position: absolute;
+  right: -15px;
+  font-size: 25px;
+  font-weight: 600;
+  color: red;
+}
+
+.userInfoDescription {
+  position: absolute;
+  right: -250px;
+  bottom: -50px;
+  width: 150px;
+  background: white;
+  z-index: 10;
+  border: 1px solid gray;
+  padding: 1em;
+  display: none;
+}
+
+.userInfoIcon {
+  position: absolute;
+  right: -50px;
+}
+
+.userInfoIcon input {
+  width: 30px;
+  height: 30px;
+  transform: translateZ(0px);
+}
+
+.userInfoIcon:hover+.userInfoDescription {
+  display: initial;
+}
+
+#buttonAddCredit {
+  box-shadow: 0px 10px 14px -7px #276873;
+  background-color: #599bb3;
+  border-radius: 4px;
+  border: 1px solid #29668f;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #3d768a;
+  width: 150px;
+  outline: none;
+}
+
+#buttonAddCredit:hover {
+  background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+  background-color: #408c99;
 }
