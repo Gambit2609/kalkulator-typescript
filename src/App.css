@@ -1,4 +1,4 @@
-html{
+html {
   overflow-x: hidden;
 }
 
@@ -24,9 +24,9 @@ html{
   opacity: 0.9;
 }
 
-.headerDescription{
+.headerDescription {
   padding: 20px;
-  white-space:pre-wrap;
+  white-space: pre-wrap;
   text-align: center;
   line-height: 1.7em;
 }
@@ -133,7 +133,7 @@ html{
   transform: translateZ(0px);
 }
 
-#deleteCreditLine{
+#deleteCreditLine {
   transform: translateZ(0px);
 }
 
@@ -236,18 +236,30 @@ html{
 .overpay {
   color: red;
   border: none;
+  display: flex;
+  flex-direction: row;
+  padding-top: 8px;
+  padding-bottom: 0px;
+  align-items: center;
 }
 
 .overpay::before {
-  content: "Miesięczne zobowiązanie wzrośnie o ";
+  content: "Miesięczne zobowiązanie wzrośnie o:";
+  font-size: 16px;
 }
 
 .underpay {
-  color: green
+  color: green;
+  display: flex;
+  flex-direction: row;
+  padding-top: 8px;
+  padding-bottom: 0px;
+  align-items: center;
 }
 
 .underpay::before {
-  content: "Miesięczne zobowiązanie zmaleje o ";
+  content: "Miesięczne zobowiązanie zmaleje o:";
+  font-size: 16px;
 }
 
 .optionalOrRequired {
@@ -287,50 +299,52 @@ html{
   color: red;
 }
 
-.userInfoDescription{
+.userInfoDescription {
   position: absolute;
-    right: -250px;
-    bottom: -50px;
-    width: 150px;
-    background: white;
-    z-index: 10;
-    border: 1px solid gray;
-    padding: 1em;
-    display: none;
+  right: -250px;
+  bottom: -50px;
+  width: 150px;
+  background: white;
+  z-index: 10;
+  border: 1px solid gray;
+  padding: 1em;
+  display: none;
 }
 
-.userInfoIcon{
+.userInfoIcon {
   position: absolute;
   right: -50px;
 }
 
-.userInfoIcon input{
+.userInfoIcon input {
   width: 30px;
   height: 30px;
   transform: translateZ(0px);
 }
 
-.userInfoIcon:hover + .userInfoDescription{
+.userInfoIcon:hover+.userInfoDescription {
   display: initial;
 }
 
 #buttonAddCredit {
-	box-shadow: 0px 10px 14px -7px #276873;
-	background-color:#599bb3;
-	border-radius:4px;
-	border:1px solid #29668f;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	font-size:14px;
-	font-weight:bold;
-	padding:6px 12px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #3d768a;
+  box-shadow: 0px 10px 14px -7px #276873;
+  background-color: #599bb3;
+  border-radius: 4px;
+  border: 1px solid #29668f;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #3d768a;
   width: 150px;
+  outline: none;
 }
+
 #buttonAddCredit:hover {
-	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
-	background-color:#408c99;
+  background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+  background-color: #408c99;
 }

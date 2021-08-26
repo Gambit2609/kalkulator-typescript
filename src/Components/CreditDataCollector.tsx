@@ -65,6 +65,7 @@ export function CreditDataCollector() {
     }
 
     function validateCreditInformation(userCreditData: CreditItem): boolean {
+
         let validationSuccessfull = { success: true };
         userCreditData.creditAmount <= 0 && validationNegative("creditAmount", validationSuccessfull);
         userCreditData.creditAmount > 0 && validationPositive("creditAmount");
@@ -122,7 +123,7 @@ export function CreditDataCollector() {
 
     function countCreditMonthlyPayment(credit: CreditItem, additionalRate: number, increasedRate: boolean): number {
         let additionalInterest = increasedRate ? additionalRate : 0;
-        let rateOfInterest = 1 + ((credit.rateOfInterest + additionalInterest) / 100) / 12;
+        let rateOfInterest = 1 + (((credit.rateOfInterest + additionalInterest) || 0.01) / 100) / 12;
         let creditDuration = credit.creditDuration;
         let creditMonthlyPayment = credit.creditAmount * Math.pow(rateOfInterest, creditDuration) * ((rateOfInterest - 1) / (Math.pow(rateOfInterest, creditDuration) - 1));
 
@@ -159,6 +160,7 @@ export function CreditDataCollector() {
             setDeactivateAdditionalIntRateInput(false);
         } else {
             setDeactivateAdditionalIntRateInput(true);
+            setAdditionalInterestRate(0);
         }
     }, [creditItems])
 
@@ -176,7 +178,7 @@ export function CreditDataCollector() {
                     />
                     <select id="creditInfo" value={creditLine.creditInfo} onChange={(e) => handleChange(e, "creditInfo")}>
                         <option value="">----</option>
-                        <option value="consumer-loan">Kredyt konsumpcyjny</option>
+                        <option value="consumer-loan">Kredyt gotówkowy</option>
                         <option value="mortgage">Kredyt hipoteczny</option>
                         <option value="investment-loan">Kredyt inwestycyjny</option>
                         <option value="consolidation-loan">Kredyt konsolidacyjny</option>

@@ -1,4 +1,5 @@
 export interface CreditItem {
+    [index: string]: number| string | undefined;
     creditInfo: string;
     creditAmount: number;
     creditDuration: number;
